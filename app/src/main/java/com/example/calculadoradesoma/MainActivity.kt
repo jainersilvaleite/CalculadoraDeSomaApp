@@ -131,10 +131,12 @@ fun CalculatorScreen() {
                     .padding(10.dp)
             ) {
                 NumberInsertColumn(
+                    numberToInsert = number1.toString(),
                     numberPosition = 1,
                     onNumberInsert = { number -> number1 = number }
                 )
                 NumberInsertColumn(
+                    numberToInsert = number2.toString(),
                     numberPosition = 2,
                     onNumberInsert = { number -> number2 = number }
                 )
@@ -191,6 +193,7 @@ fun CalculatorScreen() {
 
 @Composable
 fun NumberInsertColumn(
+    numberToInsert: String,
     numberPosition: Int,
     onNumberInsert: (number: Int) -> Unit
 ) {
@@ -217,7 +220,7 @@ fun NumberInsertColumn(
             )
         }
         TextField(
-            value = "0",
+            value = numberToInsert,
             modifier = Modifier
                 .width(100.dp),
             onValueChange = { number ->
