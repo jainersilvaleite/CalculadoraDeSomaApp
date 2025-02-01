@@ -58,8 +58,8 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CalculatorScreen() {
-    var number1 by remember { mutableIntStateOf(0) }
-    var number2 by remember { mutableIntStateOf(0) }
+    var number1 by remember { mutableStateOf("0") }
+    var number2 by remember { mutableStateOf("0") }
     var result by remember { mutableIntStateOf(0) }
     var history by remember { mutableStateOf("") }
 
@@ -131,13 +131,13 @@ fun CalculatorScreen() {
                     .padding(10.dp)
             ) {
                 NumberInsertColumn(
-                    numberToInsert = number1.toString(),
                     numberPosition = 1,
+                    numberToInsert = number1,
                     onNumberInsert = { number -> number1 = number }
                 )
                 NumberInsertColumn(
-                    numberToInsert = number2.toString(),
                     numberPosition = 2,
+                    numberToInsert = number2,
                     onNumberInsert = { number -> number2 = number }
                 )
             }
@@ -149,7 +149,7 @@ fun CalculatorScreen() {
                 shape = RectangleShape,
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0784F5)),
                 onClick = {
-                    result = number1 + number2
+                    result = number1.toInt() + number2.toInt()
                     history += "$number1 + $number2 = $result\n"
                 }
             ) {
@@ -193,9 +193,9 @@ fun CalculatorScreen() {
 
 @Composable
 fun NumberInsertColumn(
-    numberToInsert: String,
     numberPosition: Int,
-    onNumberInsert: (number: Int) -> Unit
+    numberToInsert: String,
+    onNumberInsert: (number: String) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -224,7 +224,7 @@ fun NumberInsertColumn(
             modifier = Modifier
                 .width(100.dp),
             onValueChange = { number ->
-                onNumberInsert(number.toInt())
+                onNumberInsert(number)
             }
         )
     }
